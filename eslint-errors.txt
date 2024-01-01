@@ -1,0 +1,2 @@
+'c' is not defined.eslintno-undef
+'d' is not defined.eslintno-undef
