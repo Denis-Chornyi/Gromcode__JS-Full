@@ -1,6 +1,6 @@
-for (let i = 1; i <= 5; i++) {
-  console.log('\n=> ' + i + ' <=');
-  for (let x = 1; x <= 10; x++) {
-    console.log(i + ' x ' + x + ' = ' + i * x);
+for (let x = 1; x <= 5; x++) {
+  for (let y = 1; y <= 10; y++) {
+    console.log(x + ' x ' + y + ' = ' + x * y);
   }
+  console.log('=> ' + x + ' <=');
 }
