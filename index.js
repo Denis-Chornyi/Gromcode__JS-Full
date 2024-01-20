@@ -1,6 +1,2 @@
-const flatArray = (arr) => {
-  const copyArr = arr.slice();
-  const flatArr = copyArr.flat();
-  flatArr.sort((a, b) => (a > b ? 1 : -1));
-  return flatArr;
-};
+export const getEvenNumbers = (arr) => arr.filter((num) => num % 2 === 0);
+console.log(getEvenNumbers([1, 2, 3, 4, 5, 6]));
