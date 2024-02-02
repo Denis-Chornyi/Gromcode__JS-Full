@@ -7,9 +7,7 @@ getTitleElement();
 
 export const getInputElement = () => {
   const inputElem = document.querySelector("input");
-  if (inputElem.type === "text") {
-    console.dir(inputElem);
-  }
+  console.dir(inputElem);
   return inputElem;
 };
 getInputElement();
