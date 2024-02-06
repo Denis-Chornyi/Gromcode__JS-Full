@@ -12,10 +12,7 @@ const clearBtn = () => {
   eventsListElem.innerHTML = "";
 };
 const logTarget = (text, color) => {
-  const spanElem = document.createElement("span");
-  spanElem.style = `color: ${color}; margin-left: 8px;`;
-  spanElem.textContent = text;
-  eventsListElem.appendChild(spanElem);
+  eventsListElem.innerHTML += `<span style="color: ${color}; margin-left: 8px;">${text}</span>`;
 };
 const logGreenDiv = logTarget.bind(null, "div", "Green");
 const logGreenP = logTarget.bind(null, "p", "Green");
@@ -34,7 +31,7 @@ const startProcess = () => {
   elemP.addEventListener("click", logGreenP);
   elemSpan.addEventListener("click", logGreenSpan);
 };
-startProcess();
+
 
 clearButton.addEventListener("click", clearBtn);
 
@@ -50,6 +47,10 @@ const stopProcess = () => {
 removeHandlers.addEventListener("click", stopProcess);
 
 attachHandlers.addEventListener("click", startProcess);
+
+document.addEventListener("DOMContentLoaded", () => {
+  startProcess();
+});
 // const divElem = document.querySelector("div");
 // const pElem = document.querySelector("p");
 // const spanElem = document.querySelector("span");
