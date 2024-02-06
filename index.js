@@ -3,21 +3,21 @@ const pElem = document.querySelector("p");
 const spanElem = document.querySelector("span");
 const eventsListElem = document.querySelector(".events-list");
 
-const logTarget = (text, color) => {
+const logEvent = (text, color) => {
   const spanElem = document.createElement("span");
   spanElem.style = `color: ${color}; margin-left: 8px;`;
   spanElem.textContent = text;
   eventsListElem.appendChild(spanElem);
 };
-const logGreenDiv = logTarget.bind(null, "div", "Green");
-const logGreenP = logTarget.bind(null, "p", "Green");
-const logGreenSpan = logTarget.bind(null, "span", "Green");
+const logGreenDiv = logEvent.bind(null, "div", "Green");
+const logGreenP = logEvent.bind(null, "p", "Green");
+const logGreenSpan = logEvent.bind(null, "span", "Green");
 
-const logGreyDiv = logTarget.bind(null, "div", "Grey");
-const logGreyP = logTarget.bind(null, "p", "Grey");
-const logGreySpan = logTarget.bind(null, "span", "Grey");
+const logGreyDiv = logEvent.bind(null, "div", "Grey");
+const logGreyP = logEvent.bind(null, "p", "Grey");
+const logGreySpan = logEvent.bind(null, "span", "Grey");
 
-const startProcess = () => {
+const attachHandlers = () => {
   divElem.addEventListener("click", logGreyDiv, true);
   pElem.addEventListener("click", logGreyP, true);
   spanElem.addEventListener("click", logGreySpan, true);
@@ -26,10 +26,10 @@ const startProcess = () => {
   spanElem.addEventListener("click", logGreenSpan);
 };
 
-const attachHandlers = document.querySelector(".attach-handlers-btn");
-attachHandlers.addEventListener("click", startProcess);
+const attachHandlersBtnElem = document.querySelector(".attach-handlers-btn");
+attachHandlersBtnElem.addEventListener("click", attachHandlers);
 
-const stopProcess = () => {
+const removeHandlers = () => {
   divElem.removeEventListener("click", logGreenDiv);
   pElem.removeEventListener("click", logGreenP);
   spanElem.removeEventListener("click", logGreenSpan);
@@ -38,8 +38,8 @@ const stopProcess = () => {
   spanElem.removeEventListener("click", logGreySpan, true);
 };
 
-const removeHandlers = document.querySelector(".remove-handlers-btn");
-removeHandlers.addEventListener("click", stopProcess);
+const removeHandlersBtnElem = document.querySelector(".remove-handlers-btn");
+removeHandlersBtnElem.addEventListener("click", removeHandlers);
 
 const clearBtn = () => {
   eventsListElem.innerHTML = "";
@@ -48,7 +48,7 @@ const clearButton = document.querySelector(".clear-btn");
 clearButton.addEventListener("click", clearBtn);
 
 document.addEventListener("DOMContentLoaded", () => {
-  startProcess();
+  attachHandlers();
 });
 // const divElem = document.querySelector("div");
 // const pElem = document.querySelector("p");
