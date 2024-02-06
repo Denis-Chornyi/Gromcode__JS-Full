@@ -21,11 +21,13 @@ const startProcess = () => {
   divElem.addEventListener("click", logGreyDiv, true);
   pElem.addEventListener("click", logGreyP, true);
   spanElem.addEventListener("click", logGreySpan, true);
-
   divElem.addEventListener("click", logGreenDiv);
   pElem.addEventListener("click", logGreenP);
   spanElem.addEventListener("click", logGreenSpan);
 };
+
+const attachHandlers = document.querySelector(".attach-handlers-btn");
+attachHandlers.addEventListener("click", startProcess);
 
 const stopProcess = () => {
   divElem.removeEventListener("click", logGreenDiv);
@@ -38,9 +40,6 @@ const stopProcess = () => {
 
 const removeHandlers = document.querySelector(".remove-handlers-btn");
 removeHandlers.addEventListener("click", stopProcess);
-
-const attachHandlers = document.querySelector(".attach-handlers-btn");
-attachHandlers.addEventListener("click", startProcess);
 
 const clearBtn = () => {
   eventsListElem.innerHTML = "";
