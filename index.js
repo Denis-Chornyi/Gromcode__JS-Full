@@ -14,13 +14,13 @@ const clearBtn = () => {
 const logTarget = (text, color) => {
   eventsListElem.innerHTML += `<span style="color: ${color}; margin-left: 8px;">${text}</span>`;
 };
-const logGreenDiv = logTarget.bind(null, "DIV", "Green");
-const logGreenP = logTarget.bind(null, "P", "Green");
-const logGreenSpan = logTarget.bind(null, "SPAN", "Green");
+const logGreenDiv = logTarget.bind(null, "div", "Green");
+const logGreenP = logTarget.bind(null, "p", "Green");
+const logGreenSpan = logTarget.bind(null, "span", "Green");
 
-const logGreyDiv = logTarget.bind(null, "DIV", "Grey");
-const logGreyP = logTarget.bind(null, "P", "Grey");
-const logGreySpan = logTarget.bind(null, "SPAN", "Grey");
+const logGreyDiv = logTarget.bind(null, "div", "Grey");
+const logGreyP = logTarget.bind(null, "p", "Grey");
+const logGreySpan = logTarget.bind(null, "span", "Grey");
 
 const startProcess = () => {
   elemDiv.addEventListener("click", logGreyDiv, true);
@@ -31,7 +31,7 @@ const startProcess = () => {
   elemP.addEventListener("click", logGreenP);
   elemSpan.addEventListener("click", logGreenSpan);
 };
-startProcess()
+startProcess();
 
 clearButton.addEventListener("click", clearBtn);
 
@@ -47,4 +47,3 @@ const stopProcess = () => {
 removeHandlers.addEventListener("click", stopProcess);
 
 attachHandlers.addEventListener("click", startProcess);
-
