@@ -22,13 +22,16 @@ const logGreyDiv = logTarget.bind(null, "DIV", "Grey");
 const logGreyP = logTarget.bind(null, "P", "Grey");
 const logGreySpan = logTarget.bind(null, "SPAN", "Grey");
 
-elemDiv.addEventListener("click", logGreyDiv, true);
-elemP.addEventListener("click", logGreyP, true);
-elemSpan.addEventListener("click", logGreySpan, true);
+const startProcess = () => {
+  elemDiv.addEventListener("click", logGreyDiv, true);
+  elemP.addEventListener("click", logGreyP, true);
+  elemSpan.addEventListener("click", logGreySpan, true);
 
-elemDiv.addEventListener("click", logGreenDiv);
-elemP.addEventListener("click", logGreenP);
-elemSpan.addEventListener("click", logGreenSpan);
+  elemDiv.addEventListener("click", logGreenDiv);
+  elemP.addEventListener("click", logGreenP);
+  elemSpan.addEventListener("click", logGreenSpan);
+};
+startProcess()
 
 clearButton.addEventListener("click", clearBtn);
 
@@ -42,8 +45,6 @@ const stopProcess = () => {
 };
 
 removeHandlers.addEventListener("click", stopProcess);
-const startProcess = () => {
-  removeHandlers.removeEventListener("click", stopProcess);
-};
+
 attachHandlers.addEventListener("click", startProcess);
 
