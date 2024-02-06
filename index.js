@@ -6,8 +6,6 @@ const clearButton = document.querySelector(".clear-btn");
 const removeHandlers = document.querySelector(".remove-handlers-btn");
 const attachHandlers = document.querySelector(".attach-handlers-btn");
 
-eventsListElem.innerHTML = "";
-
 const clearBtn = () => {
   eventsListElem.innerHTML = "";
 };
@@ -31,7 +29,6 @@ const startProcess = () => {
   elemP.addEventListener("click", logGreenP);
   elemSpan.addEventListener("click", logGreenSpan);
 };
-
 
 clearButton.addEventListener("click", clearBtn);
 
