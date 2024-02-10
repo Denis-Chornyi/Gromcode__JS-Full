@@ -1,55 +1,62 @@
-const divElem = document.querySelector("div");
-const pElem = document.querySelector("p");
-const spanElem = document.querySelector("span");
-const eventsListElem = document.querySelector(".events-list");
-
-const logEvent = (text, color) => {
-  const spanElem = document.createElement("span");
-  spanElem.style = `color: ${color}; margin-left: 8px;`;
-  spanElem.textContent = text;
-  eventsListElem.appendChild(spanElem);
+const generateNumbersRange = (from, to) => {
+  const result = [];
+  for (let i = from; i <= to; i += 1) {
+    result.push(i);
+  }
+  return result;
 };
 
-const logGreenDiv = logEvent.bind(null, "div", "green");
-const logGreyDiv = logEvent.bind(null, "div", "grey");
+const getLineSeats = () =>
+  generateNumbersRange(1, 10)
+    .map(
+      (seatNumber) => `
+        <div class="sector__seat" 
+        data-seat-number="${seatNumber}"
+        ></div>`
+    )
+    .join("");
 
-const logGreenP = logEvent.bind(null, "p", "green");
-const logGreyP = logEvent.bind(null, "p", "grey");
-
-const logGreenSpan = logEvent.bind(null, "span", "green");
-const logGreySpan = logEvent.bind(null, "span", "grey");
-
-const attachHandlers = () => {
-  divElem.addEventListener("click", logGreyDiv, true);
-  divElem.addEventListener("click", logGreenDiv);
-  pElem.addEventListener("click", logGreyP, true);
-  pElem.addEventListener("click", logGreenP);
-  spanElem.addEventListener("click", logGreySpan, true);
-  spanElem.addEventListener("click", logGreenSpan);
+const getSectorLines = () => {
+  const seatsString = getLineSeats();
+  return generateNumbersRange(1, 10)
+    .map(
+      (lineNumber) => `
+        <div class="sector__line" 
+        data-line-number="${lineNumber}"
+        >${seatsString}</div>`
+    )
+    .join("");
 };
 
-const attachHandlersBtnElem = document.querySelector(".attach-handlers-btn");
-attachHandlersBtnElem.addEventListener("click", attachHandlers);
+const arenaElem = document.querySelector(".arena");
 
-const removeHandlers = () => {
-  divElem.removeEventListener("click", logGreenDiv);
-  divElem.removeEventListener("click", logGreyDiv, true);
-  pElem.removeEventListener("click", logGreenP);
-  pElem.removeEventListener("click", logGreyP, true);
-  spanElem.removeEventListener("click", logGreenSpan);
-  spanElem.removeEventListener("click", logGreySpan, true);
+const renderArena = () => {
+  const linesString = getSectorLines();
+  const sectorsString = generateNumbersRange(1, 3)
+    .map(
+      (sectorNumber) => `
+        <div class="sector" 
+        data-sector-number="${sectorNumber}"
+        >${linesString}</div>`
+    )
+    .join("");
+  arenaElem.innerHTML = sectorsString;
 };
 
-const removeHandlersBtnElem = document.querySelector(".remove-handlers-btn");
-removeHandlersBtnElem.addEventListener("click", removeHandlers);
+const onSeatSelect = (event) => {
+  const isSeat = event.target.classList.contains("sector__seat");
+  if (!isSeat) {
+    return;
+  }
 
-const clearBoard = () => {
-  eventsListElem.innerHTML = "";
+  const seatNumbers = event.target.dataset.seatNumber;
+  const lineNumbers = event.target.closest(".sector__line").dataset.lineNumber;
+  const sectorNumbers = event.target.closest(".sector").dataset.sectorNumber;
+
+  const selectedSeatElem = document.querySelector(".board__selected-seat");
+  selectedSeatElem.textContent = `S ${sectorNumbers} - L ${lineNumbers} - S ${seatNumbers}`;
 };
 
-const clearBtnElem = document.querySelector(".clear-btn");
-clearBtnElem.addEventListener("click", clearBoard);
+renderArena();
 
-document.addEventListener("DOMContentLoaded", () => {
-  attachHandlers();
-});
+arenaElem.addEventListener("click", onSeatSelect);
