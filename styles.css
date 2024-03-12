@@ -1,48 +1,30 @@
 .page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  font-size: 32px;
+  height: 100vh;
+  width: 100vw;
 }
 
-.arena {
+.counter {
   display: flex;
-}
-
-.sector {
-  display: flex;
-  flex-direction: column;
-  background-color: coral;
-  margin: 16px;
-}
-
-.sector__line {
-  display: flex;
-  height: 20px;
-  width: 200px;
+  margin: auto;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 }
 
-.sector__seat {
-  height: 16px;
-  width: 16px;
-  background-color: aqua;
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
-  cursor: pointer;
-}
-
-.board {
-  height: 100px;
-  width: 200px;
-  background-color: goldenrod;
+.counter__button {
+  width: 48px;
+  height: 48px;
+  border: 2px solid grey;
   border-radius: 8px;
-  color: white;
-  font-size: 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  text-transform: uppercase;
+  background: transparent;
+  font: 700px;
+  font-size: 24px;
+  cursor: pointer;
+  outline: none;
+}
+
+.counter__value {
+  margin: 16px;
 }

@@ -1,62 +1,61 @@
-const generateNumbersRange = (from, to) => {
-  const result = [];
-  for (let i = from; i <= to; i += 1) {
-    result.push(i);
-  }
-  return result;
-};
+// ///////////////////////////////
+// ///////////////////////////////
+// const calendarEvent = document.createElement("div");
+// calendarEvent.classList.add("event");
+// calendarEvent.setAttribute("data-event-id", Math.random());
+// calendarEvent.style.position = absolute;
+// const endTime = event.target.name.contains("endTime");
+// const startTime = event.target.name.contains("startTime");
+// let resultHeight = endTime - startTime;
+// resultHeight /= 60000;
+// calendarEvent.style.height = resultHeight.toFixed();
+// const calendarEventTitle = document.createElement("div");
+// calendarEventTitle.classList.add("event__title");
+// const title = event.target.classList.contains("event-form__field-title");
+// calendarEventTitle.textContent = title.value;
+// const calendarEventTime = document.createElement("div");
+// calendarEventTime.classList.add("event__time");
+// calendarEventTime.textContent = `${startTime.value} - ${endTime.value}`;
+// return (weekElem.innerHTML = calendarEvent);
+// function getPrimess(num) {
+//   for (let i = 2; i <= num; i += 1) {
+//     let isPrimeNumber = true;
+//     for (let j = 2; j < i; j += 1) {
+//       if (i % j === 0) {
+//         isPrimeNumber = false;
+//         break;
+//       }
+//     }
+//     if (isPrimeNumber) console.log(i);
+//   }
+// }
+// getPrimess(20);
+const counterElem = document.querySelector(".counter");
+const counterValueElem = document.querySelector(".counter__value");
 
-const getLineSeats = () =>
-  generateNumbersRange(1, 10)
-    .map(
-      (seatNumber) => `
-        <div class="sector__seat" 
-        data-seat-number="${seatNumber}"
-        ></div>`
-    )
-    .join("");
-
-const getSectorLines = () => {
-  const seatsString = getLineSeats();
-  return generateNumbersRange(1, 10)
-    .map(
-      (lineNumber) => `
-        <div class="sector__line" 
-        data-line-number="${lineNumber}"
-        >${seatsString}</div>`
-    )
-    .join("");
-};
-
-const arenaElem = document.querySelector(".arena");
-
-const renderArena = () => {
-  const linesString = getSectorLines();
-  const sectorsString = generateNumbersRange(1, 3)
-    .map(
-      (sectorNumber) => `
-        <div class="sector" 
-        data-sector-number="${sectorNumber}"
-        >${linesString}</div>`
-    )
-    .join("");
-  arenaElem.innerHTML = sectorsString;
-};
-
-const onSeatSelect = (event) => {
-  const isSeat = event.target.classList.contains("sector__seat");
-  if (!isSeat) {
+const onCounterChange = (event) => {
+  const isButton = event.target.classList.contains("counter__button");
+  if (!isButton) {
     return;
   }
+  const { action } = event.target.dataset;
 
-  const seatNumbers = event.target.dataset.seatNumber;
-  const lineNumbers = event.target.closest(".sector__line").dataset.lineNumber;
-  const sectorNumbers = event.target.closest(".sector").dataset.sectorNumber;
+  const oldValue = +counterValueElem.textContent;
 
-  const selectedSeatElem = document.querySelector(".board__selected-seat");
-  selectedSeatElem.textContent = `S ${sectorNumbers} - L ${lineNumbers} - S ${seatNumbers}`;
+  const newValue = action === "decrease" ? oldValue - 1 : oldValue + 1;
+
+  localStorage.setItem("counterValue", newValue);
+
+  counterValueElem.textContent = newValue;
 };
+counterElem.addEventListener("click", onCounterChange);
 
-renderArena();
+const onStorageChange = (event) => {
+  counterValueElem.textContent = event.newValue;
+};
+window.addEventListener("storage", onStorageChange);
 
-arenaElem.addEventListener("click", onSeatSelect);
+const onDocumentLoaded = () => {
+  counterValueElem.textContent = localStorage.getItem("counterValue") || 0;
+};
+document.addEventListener("DOMContentLoaded", onDocumentLoaded);
