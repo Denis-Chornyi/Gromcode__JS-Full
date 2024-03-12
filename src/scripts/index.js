@@ -4,7 +4,6 @@ import { renderTasks } from "./renderer.js";
 document.addEventListener("DOMContentLoaded", () => {
   renderTasks();
   initTodoListHandlers();
-  // renderTasks();
 });
 
 const onStorageChange = (e) => {
