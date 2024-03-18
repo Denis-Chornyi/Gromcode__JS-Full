@@ -1,8 +1,8 @@
 import { addImage } from "./addImage.js";
 
-const addImageV2 = (imgSrc) => {
+export const addImageV2 = (url) => {
   return new Promise((resolve, reject) => {
-    addImage(imgSrc, (error, script) => {
+    addImage(url, (error, script) => {
       if (error) {
         reject(error);
       }
