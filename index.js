@@ -1,0 +1,16 @@
+import { addImage } from "./addImage.js";
+
+const addImageV2 = (imgSrc) => {
+  return new Promise((resolve, reject) => {
+    addImage(imgSrc, (error, script) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(script);
+    });
+  });
+};
+
+addImageV2("https://server.com/image.png")
+  .then((data) => console.log(data)) // ==> { width: 200, height: 100 }
+  .catch((error) => console.log(error)); // ==> 'Image load failed'
