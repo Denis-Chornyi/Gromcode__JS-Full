@@ -1,75 +1,43 @@
 const baseUrl = "https://65fed811b2a18489b386a591.mockapi.io/api/v7/users";
 
-export function getUsersList() {
-  return fetch(baseUrl).then((response) => response.json());
-  // put your code here
-}
+const formElem = document.querySelector(".login-form");
+const submitBtnElem = document.querySelector(".submit-button");
+const inputs = [...document.querySelectorAll("input")];
+const errorTextElem = document.querySelector(".error-text");
 
-export function getUserById(userId) {
-  return fetch(`${baseUrl}/${userId}`).then((response) => response.json());
-  // put your code here
-}
+const reportValidity = () => {
+  if (formElem.reportValidity()) {
+    submitBtnElem.disabled = false;
+  } else {
+    submitBtnElem.disabled = true;
+  }
+  errorTextElem.textContent = "";
+};
 
-export function createUser(userData) {
-  return fetch(baseUrl, {
+const postData = (event) => {
+  event.preventDefault();
+  const newUser = [...new FormData(formElem)].reduce(
+    (acc, [field, value]) => ({ ...acc, [field]: value }),
+    {}
+  );
+
+  fetch(baseUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
-    body: JSON.stringify(userData),
-  });
-  // put your code here
-}
-
-export function deleteUser(userId) {
-  return fetch(`${baseUrl}/${userId}`, {
-    method: "DELETE",
-  });
-  // put your code here
-}
-
-export function updateUser(userId, userData) {
-  // put your code here
-  return fetch(`${baseUrl}/${userId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: JSON.stringify(userData),
-  });
-}
-
-// examples
-getUsersList().then((users) => {
-  console.log(users); // array of the user objects [{'id':'1', 'firstName':'Grayce' ... }, {'id':'2', 'firstName':'Ara' ... }, ...]
-});
-
-getUserById("2").then((userData) => {
-  console.log(userData); // {'id':'2', 'firstName':'Ara' ... }
-});
-
-const newUserData = {
-  email: "cool@email.com",
-  firstName: "Iron",
-  lastName: "Man",
-  age: 42,
+    body: JSON.stringify(newUser),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      inputs.map((elem) => (elem.value = ""));
+      submitBtnElem.disabled = true;
+      alert(JSON.stringify(data));
+    })
+    .catch(() => {
+      errorTextElem.textContent = "Failed to create user";
+    });
 };
 
-createUser(newUserData).then(() => {
-  console.log("User created");
-});
-
-const updatedUserData = {
-  email: "new@email.com",
-  firstName: "John",
-  lastName: "Doe",
-  age: 17,
-};
-
-updateUser("1", updatedUserData).then(() => {
-  console.log("User updated");
-});
-
-deleteUser("2").then(() => {
-  console.log("User updated");
-});
+formElem.addEventListener("input", reportValidity);
+formElem.addEventListener("submit", postData);
