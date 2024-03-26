@@ -1,43 +1,36 @@
-const baseUrl = "https://65fed811b2a18489b386a591.mockapi.io/api/v7/users";
+import { fetchUserData, fetchRepositories } from "./gateways.js";
+import { renderUserData } from "./user.js";
+import { renderRepos, cleanReposList } from "./repos.js";
+import { showSpinner, hidSpinner } from "./spinner.js";
 
-const formElem = document.querySelector(".login-form");
-const submitBtnElem = document.querySelector(".submit-button");
-const inputs = [...document.querySelectorAll("input")];
-const errorTextElem = document.querySelector(".error-text");
-
-const reportValidity = () => {
-  if (formElem.reportValidity()) {
-    submitBtnElem.disabled = false;
-  } else {
-    submitBtnElem.disabled = true;
-  }
-  errorTextElem.textContent = "";
+const defaultUser = {
+  avatar_url: "https://avatars3.githubusercontent.com/u10002",
+  name: "",
+  location: "",
 };
 
-const postData = (event) => {
-  event.preventDefault();
-  const newUser = [...new FormData(formElem)].reduce(
-    (acc, [field, value]) => ({ ...acc, [field]: value }),
-    {}
-  );
+renderUserData(defaultUser);
 
-  fetch(baseUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: JSON.stringify(newUser),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      inputs.map((elem) => (elem.value = ""));
-      submitBtnElem.disabled = true;
-      alert(JSON.stringify(data));
+const showUserBtnElem = document.querySelector(".name-form__btn");
+const userNameInputElem = document.querySelector(".name-form__input");
+
+const onSearchUser = () => {
+  showSpinner();
+  cleanReposList();
+  const userName = userNameInputElem.value;
+  fetchUserData(userName)
+    .then((userData) => {
+      renderUserData(userData);
+      return userData.repos_url;
     })
-    .catch(() => {
-      errorTextElem.textContent = "Failed to create user";
-    });
+    .then((url) => fetchRepositories(url))
+    .then((reposList) => {
+      renderRepos(reposList);
+    })
+    .catch((err) => {
+      alert(err.message);
+    })
+    .finally(() => hidSpinner());
 };
 
-formElem.addEventListener("input", reportValidity);
-formElem.addEventListener("submit", postData);
+showUserBtnElem.addEventListener("click", onSearchUser);
