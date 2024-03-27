@@ -4,7 +4,7 @@ import { renderRepos, cleanReposList } from "./repos.js";
 import { showSpinner, hidSpinner } from "./spinner.js";
 
 const defaultUser = {
-  avatar_url: "https://avatars3.githubusercontent.com/u10002",
+  avatar_url: "https://avatars3.githubusercontent.com/u10001",
   name: "",
   location: "",
 };
@@ -28,21 +28,6 @@ const onSearchUser = async () => {
   } finally {
     hidSpinner()
   }
-
-
-  // fetchUserData(userName)
-  //   .then((userData) => {
-  //     renderUserData(userData);
-  //     return userData.repos_url;
-  //   })
-  //   .then((url) => fetchRepositories(url))
-  //   .then((reposList) => {
-  //     renderRepos(reposList);
-  //   })
-  //   .catch((err) => {
-  //     alert(err.message);
-  //   })
-  //   .finally(() => hidSpinner());
 };
 
 showUserBtnElem.addEventListener("click", onSearchUser);
