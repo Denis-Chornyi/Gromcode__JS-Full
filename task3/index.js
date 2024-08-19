@@ -2,7 +2,6 @@ const baseUrl = "https://6613d8a753b0d5d80f6885e7.mockapi.io/api/v7/users";
 
 const formElem = document.querySelector(".login-form");
 const submitBtnElem = document.querySelector(".submit-button");
-const inputsElems = document.querySelectorAll(".form-input");
 const errorTextElem = document.querySelector(".error-text");
 
 const reportValidity = () => {
